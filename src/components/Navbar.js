@@ -87,8 +87,6 @@ function Navbar({onSearch}){
             </Link>
             {dropdown && <Dropdown />}
           </li>
-
-        
             </ul>
         </nav> 
     </>
