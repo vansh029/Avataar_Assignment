@@ -2,7 +2,7 @@
 
 ### Name: Vansh Bansal
 ### ID: 500086172
-### Class: B-3 CSF (NH)
+## Class: B-3 CSF (NH)
 
 # Getting Started with Create React App
 
