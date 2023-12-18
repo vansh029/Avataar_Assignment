@@ -1,3 +1,9 @@
+# Submitted by:
+
+### Name: Vansh Bansal
+### ID: 500086172
+### Class: B-3 CSF (NH)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
