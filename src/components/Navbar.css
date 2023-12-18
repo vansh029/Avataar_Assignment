@@ -1,4 +1,3 @@
-
 .dynamic-menu {
   display: flex;
   justify-content: space-between;
@@ -73,6 +72,19 @@
   width: 100%;
   margin: 0;
   box-sizing: border-box;
+}
+.dynamic-menu ul li:hover {
+  background-color: #fff;
+  color: #000;
+  border-radius: 5px;
+}
+
+/* Add hover effect to sub-menu items */
+.dynamic-menu ul .more-items li:hover,
+.dynamic-menu ul .more-items li.selected {
+  background-color: #fff;
+  color: #000;
+  border-radius: 5px;
 }
 
 .dynamic-menu ul .more-items li:hover,

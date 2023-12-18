@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import { FaSearch } from 'react-icons/fa';
@@ -84,10 +83,7 @@ const Navbar = ({ items }) => {
         {moreItems.length > 0 && (
           <li className={`more ${moreClicked ? 'clicked' : ''}`} onClick={handleMoreClick}>
             MORE
-            {/* <img
-              src={moreClicked ? '/images/selectedarrow.jpg' : '/images/nonselectedarrow.jpg'}
-              alt="Arrow"
-            /> */}
+           
             {moreClicked && (
               <ul className="more-items">
                 {moreItems.map((item) => (
