@@ -1,96 +1,117 @@
-import React, {useState} from 'react'
-import {Link } from 'react-router-dom'
-import './Navbar.css'
-import Dropdown from './Dropdown'
-import searcIcon from '../searchicon.jpg'
 
-function Navbar({onSearch}){
-    const [click, setClick]= useState(false)
-    const [dropdown, setDropdown]=useState(false)
-    const [query, setQuery] = useState('');
- 
-    const handleClick = () => setClick(!click)
-    const closeMobileMenu=()=> setClick(false)
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import "./Navbar.css";
+import Dropdown from "./Dropdown";
+import SearchBar from "./SearchBar";
 
-    const onMouseEnter = () => {
-        if (window.innerWidth < 960) {
-          setDropdown(false);
-        } else {
-          setDropdown(true);
-        }
-    };
-    
-      const onMouseLeave = () => {
-        if (window.innerWidth < 960) {
-          setDropdown(false);
-        } else {
-          setDropdown(false);
-        }
-    };
+function Navbar({ onSearch }) {
+  const [click, setClick] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
 
-    const handleInputChange = (event) => {
-        setQuery(event.target.value);
-      }
-      const handleSearch = () => {
-        // Pass the search query to the parent component
-        onSearch(query);
-      };
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
+  const onMouseEnter = () => {
+    if (window.innerWidth < 960) {
+      setDropdown(false);
+    } else {
+      setDropdown(true);
+    }
+  };
+
+  const onMouseLeave = () => {
+    if (window.innerWidth < 960) {
+      setDropdown(false);
+    } else {
+      setDropdown(false);
+    }
+  };
+
+  const handleSearch = (searchTerm) => {
+    console.log("Search term:", searchTerm);
+  };
 
   return (
     <>
-        <nav className='navbar'>
-            <Link to ='/' 
-            className='navbar-logo'>
-                E-COMM <i class='fab fa-firstdraft'/> 
+      <nav className="navbar">
+        <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+          E-COMM <i className="fab fa-firstdraft" />
+        </Link>
+        <div className="menu-icon" onClick={handleClick}>
+          <i className={click ? "fas fa-times" : "fas fa-bars"} />
+        </div>
+        <ul className={click ? "nav-menu active" : "nav-menu"}>
+          <li className="nav-item">
+            <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+              HOME
             </Link>
-            <div className='menu-icon' onClick={handleClick}>
-                <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-            </div>
-            <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-                <li className='nav-item'>
-                    <Link to= '/' className='nav-links' onClick={closeMobileMenu}>
-                        HOME 
-                    </Link>
-                </li>
-                <li className='nav-item'>
-                    <Link to= '/electronics' className='nav-links' onClick={closeMobileMenu}>
-                        ELECTRONICS
-                    </Link>
-                </li>
-                <li className='nav-item'>
-                    <Link to= '/books' className='nav-links' onClick={closeMobileMenu}>
-                        BOOKS
-                    </Link>
-                </li>
-                <li className='nav-item'>
-                    <Link to= '/music' className='nav-links' onClick={closeMobileMenu}>
-                        MUSIC
-                    </Link>
-                </li>
-                <li className='nav-item'>
-                    <Link to= '/movies' className='nav-links' onClick={closeMobileMenu}>
-                        MOVIES
-                    </Link>
-                </li><li className='nav-item'>
-                    <Link to= '/clothing' className='nav-links' onClick={closeMobileMenu}>
-                        CLOTHING
-                    </Link>
-                </li>
-                
-                <li
-            className='nav-item'
+          </li>
+          <li className="nav-item">
+            <Link
+              to="/electronics"
+              className="nav-links"
+              onClick={closeMobileMenu}
+            >
+              ELECTRONICS
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link
+              to="/clothing"
+              className="nav-links"
+              onClick={closeMobileMenu}
+            >
+              CLOTHING
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link
+              to="/gaming"
+              className="nav-links"
+              onClick={closeMobileMenu}
+            >
+              GAMING
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link
+              to="/electronics"
+              className="nav-links"
+              onClick={closeMobileMenu}
+            >
+              ELECTRONICS
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link
+              to="/electronics"
+              className="nav-links"
+              onClick={closeMobileMenu}
+            >
+              POTS
+            </Link>
+          </li>
+          
+          <li
+            className="nav-item"
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
           >
-            <Link to='/services' className='nav-links' onClick={closeMobileMenu}>
-            MORE <i className='fas fa-caret-down' />
+            <Link to="/services" className="nav-links" onClick={closeMobileMenu}>
+              MORE <i className="fas fa-caret-down" />
             </Link>
             {dropdown && <Dropdown />}
           </li>
-            </ul>
-        </nav> 
+        </ul>
+        <SearchBar onSearch={handleSearch} />
+      </nav>
     </>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

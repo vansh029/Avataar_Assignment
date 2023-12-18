@@ -1,4 +1,3 @@
-// Carousel.jsx
 import React, { useEffect, useState } from "react";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import "./Slider.css";
@@ -50,7 +49,6 @@ const Carousel = ({ slides }) => {
           className="carousel-image"
         />
         <div className="carousel-textbox">
-          {/* Add your content here */}
         </div>
       </div>
     );
