@@ -79,7 +79,6 @@
   border-radius: 5px;
 }
 
-/* Add hover effect to sub-menu items */
 .dynamic-menu ul .more-items li:hover,
 .dynamic-menu ul .more-items li.selected {
   background-color: #fff;
