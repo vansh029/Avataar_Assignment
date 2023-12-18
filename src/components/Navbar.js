@@ -1,117 +1,134 @@
 
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./Navbar.css";
-import Dropdown from "./Dropdown";
-import SearchBar from "./SearchBar";
+import React, { useState, useEffect, useRef } from 'react';
+import './Navbar.css';
+import { FaSearch } from 'react-icons/fa';
 
-function Navbar({ onSearch }) {
-  const [click, setClick] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
+const Navbar = ({ items }) => {
+  const [menuItems, setMenuItems] = useState([]);
+  const [moreItems, setMoreItems] = useState([]);
+  const [isCompact, setIsCompact] = useState(false);
+  const [moreClicked, setMoreClicked] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const menuRef = useRef(null);
 
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
-
-  const onMouseEnter = () => {
-    if (window.innerWidth < 960) {
-      setDropdown(false);
-    } else {
-      setDropdown(true);
-    }
+  const handleItemClick = (itemId) => {
+    setSelectedItemId(itemId);
   };
 
-  const onMouseLeave = () => {
-    if (window.innerWidth < 960) {
-      setDropdown(false);
-    } else {
-      setDropdown(false);
-    }
+  const handleMoreClick = () => {
+    setMoreClicked(!moreClicked);
   };
 
-  const handleSearch = (searchTerm) => {
-    console.log("Search term:", searchTerm);
-  };
+  useEffect(() => {
+    const initialVisibleItems = [1, 2, 3, 4, 5, 6 ];
+    const initialMoreItems = [7, 8, 9, 10, 11];
+
+    setMenuItems(items.filter((item) => initialVisibleItems.includes(item.id)));
+    setMoreItems(items.filter((item) => initialMoreItems.includes(item.id)));
+
+    const updateMenu = () => {
+      const thresholdWidth = 175;
+      const currentWidth = window.innerWidth;
+
+      if (currentWidth <= thresholdWidth) {
+        setIsCompact(true);
+      } else {
+        setIsCompact(false);
+
+        const menuItemWidth = 175;
+
+        const availableWidth = currentWidth - 175;
+
+        const visibleItemsCount = Math.floor(availableWidth / menuItemWidth);
+        const itemsToShow = items.slice(0, visibleItemsCount);
+        const itemsToHide = items.slice(visibleItemsCount);
+
+        setMenuItems(itemsToShow);
+        setMoreItems(itemsToHide);
+      }
+    };
+
+    updateMenu();
+    window.addEventListener('resize', updateMenu);
+
+    return () => {
+      window.removeEventListener('resize', updateMenu);
+    };
+  }, [items]);
+
+  if (isCompact) {
+    return (
+      <nav className="dynamic-menu compact-view">
+        <div className="hamburger-menu">
+          <img src="/images/logo.jpg" alt="Menu Icon" />
+          <span>E-COMM</span>
+        </div>
+        <div className="search-bar">
+          <div className="input-wrapper">
+            <input type="text" placeholder="Search something" />
+          </div>
+        </div>
+      </nav>
+    );
+  }
 
   return (
-    <>
-      <nav className="navbar">
-        <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-          E-COMM <i className="fab fa-firstdraft" />
-        </Link>
-        <div className="menu-icon" onClick={handleClick}>
-          <i className={click ? "fas fa-times" : "fas fa-bars"} />
+    <nav className="dynamic-menu" ref={menuRef}>
+      <div className="hamburger-menu">
+        <span className="brand-name">E-COMM</span>
+      </div>
+      <ul>
+        {menuItems.map((item) => (
+          <li key={item.id}>{item.label}</li>
+        ))}
+        {moreItems.length > 0 && (
+          <li className={`more ${moreClicked ? 'clicked' : ''}`} onClick={handleMoreClick}>
+            MORE
+            {/* <img
+              src={moreClicked ? '/images/selectedarrow.jpg' : '/images/nonselectedarrow.jpg'}
+              alt="Arrow"
+            /> */}
+            {moreClicked && (
+              <ul className="more-items">
+                {moreItems.map((item) => (
+                  <li
+                    key={item.id}
+                    className={selectedItemId === item.id ? 'selected' : ''}
+                    onClick={() => handleItemClick(item.id)}
+                    style={{
+                      position: 'relative',
+                      backgroundColor: selectedItemId === item.id ? '#fff' : '',
+                      color: selectedItemId === item.id ? '#000' : '',
+                    }}
+                  >
+                    {item.label}
+                    {selectedItemId === item.id && (
+                      <img
+                        src="images/tick.jpg"
+                        alt="Selected"
+                        style={{
+                          position: 'absolute',
+                          right: '10px',
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                        }}
+                      />
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        )}
+      </ul>
+      <div className="search-bar">
+        <div className="input-wrapper">
+          <FaSearch className="search-icon" />
+          <input type="text" placeholder="Search Something" />
         </div>
-        <ul className={click ? "nav-menu active" : "nav-menu"}>
-          <li className="nav-item">
-            <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-              HOME
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="/electronics"
-              className="nav-links"
-              onClick={closeMobileMenu}
-            >
-              ELECTRONICS
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              to="/clothing"
-              className="nav-links"
-              onClick={closeMobileMenu}
-            >
-              CLOTHING
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              to="/gaming"
-              className="nav-links"
-              onClick={closeMobileMenu}
-            >
-              GAMING
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              to="/electronics"
-              className="nav-links"
-              onClick={closeMobileMenu}
-            >
-              ELECTRONICS
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              to="/electronics"
-              className="nav-links"
-              onClick={closeMobileMenu}
-            >
-              POTS
-            </Link>
-          </li>
-          
-          <li
-            className="nav-item"
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          >
-            <Link to="/services" className="nav-links" onClick={closeMobileMenu}>
-              MORE <i className="fas fa-caret-down" />
-            </Link>
-            {dropdown && <Dropdown />}
-          </li>
-        </ul>
-        <SearchBar onSearch={handleSearch} />
-      </nav>
-    </>
+      </div>
+    </nav>
   );
-}
+};
 
 export default Navbar;
