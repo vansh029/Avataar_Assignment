@@ -1,15 +1,6 @@
 # DEMO
 
 
-
-Uploading vansh029_Avataar_Assignment — Mozilla Firefox 2023-12-18 16-10-51.mp4…
-
-
-
-
-
-
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
