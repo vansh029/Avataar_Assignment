@@ -62,14 +62,16 @@ const Navbar = ({ items }) => {
           <img src="/images/logo.jpg" alt="Menu Icon" />
           <span>E-COMM</span>
         </div>
-        <div className="search-bar">
+        <div className={`search-bar ${moreClicked ? 'search-bar-hidden' : ''}`}>
           <div className="input-wrapper">
+            <FaSearch className="search-icon" />
             <input type="text" placeholder="Search something" />
           </div>
         </div>
       </nav>
     );
   }
+
 
   return (
     <nav className="dynamic-menu" ref={menuRef}>
